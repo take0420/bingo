@@ -11,13 +11,14 @@
 
   const createColumns = () => {
     const columns = Array.from({ length: 5 }, (_, i) => createColumn(i));
-    columns[2][2] = 'FREE'; // 真ん中のセルを "FREE" に設定
+    columns[2][2] = 'FREE';
     return columns;
   };
 
-  const createCell = (content, isHeader = false) => {
-    const cell = document.createElement(isHeader ? 'th' : 'td');
+  const createCell = (content, isFree = false) => {
+    const cell = document.createElement('td');
     cell.textContent = content;
+    if (isFree) cell.classList.add('free');
     return cell;
   };
 
@@ -26,7 +27,7 @@
     for (let row = 0; row < 5; row++) {
       const tr = document.createElement('tr');
       for (let col = 0; col < 5; col++) {
-        const td = createCell(columns[col][row]);
+        const td = createCell(columns[col][row], columns[col][row] === 'FREE');
         tr.appendChild(td);
       }
       tbody.appendChild(tr);
@@ -38,6 +39,5 @@
     renderBingo(columns);
   };
 
-  // ビンゴの初期化を実行
   initBingo();
 }
